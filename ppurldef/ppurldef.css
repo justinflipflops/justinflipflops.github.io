@@ -1,0 +1,47 @@
+article {
+  width:75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.form_url_decoder {
+    padding: 30px !important;
+    text-align: left;
+    box-shadow: 0.5px 1px 2px 0.5px rgb(0 0 0 / 10%), -0.5px 0 0.5px 1px rgb(0 0 0 / 6%);
+}
+.form_url_decoder .txtbox {
+    float: left;
+    width: 75%;
+    border: 1px solid #175f97;
+    padding: 10px;
+    height: auto;
+}
+.form_url_decoder .submitbtn {
+    float: left;
+    width: 25%;
+    padding: 10px;
+    border: 1px solid #175f97;
+    background: #175f97;
+    color: #fff;
+    text-transform: uppercase;
+}
+.decoded_output {
+    border: 1px dotted #909398;
+    margin-top: 1.25em;
+    min-height: 50px;
+    position: relative;
+    padding: 12px;
+    display: inline-block;
+    width: 100%;
+}
+.decoded_output::after {
+    content: 'Result';
+    text-transform: uppercase;
+    position: absolute;
+    top: -0.35em;
+    left: 6px;
+    font-size: 0.7em;
+    line-height: 1;
+    background: #fff;
+    color: #71757a;
+    padding: 0 6px;
+}

@@ -1,0 +1,83 @@
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="ppurldef.css">
+<title>Proofpoint URL Defense Decoder</title>
+<div>
+	<article>
+		<h1 style="text-align: center">Proofpoint URL Defense &#8211; URL Decoder</h1>
+			<div class="section_content">
+				<p><span style="text-decoration: underline;"><strong>Email Link Protection and Decoder</strong></span></p>
+				<p>Proofpoint <span style="color: #4098cb;"><a style="color: #4098cb;" href="https://www.proofpoint.com/us/products/advanced-threat-protection/targeted-attack-protection" target="_blank" rel="noopener noreferrer">Targeted Attack Protection (TAP)</a></span> is included within our feature named &#8216;<span style="color: #4098cb;"><a style="color: #4098cb;" href="https://www.proofpoint.com/us/resources/data-sheets/essentials-url-defense" target="_blank" rel="noopener noreferrer">URL Defense</a></span>&#8216;. TAP (URL Defense) automatically rewrites links found in incoming email messages in order to evaluate whether or not the linked content is malicious. As phishing and other targeted attacks become more sophisticated, TAP is a solution that meets the challenge and helps protect our customers and their resources.</p>
+				<p><span style="text-decoration: underline;"><strong>How Does TAP Work?</strong></span></p>
+				<p>TAP works by redirecting links that appear in email messages you receive. In most cases, this redirection will be completely unnoticeable to you. In some cases – including unformatted or “plaintext” email messages – you may see the rewritten link, which will begin with https://urldefense.proofpoint.com. Any clicks on the re-written link will first go through the security filter which can further detect malicious web pages. If the actual linked page is safe, you will reach the intended site; if not the page will be blocked and you will see a message explaining why.</p>
+				<p>If you need to retrieve the original, unaltered link, you can use the Proofpoint URL Decoder below.</p>
+				<blockquote><p><span style="text-decoration: underline;"><strong>IMPORTANT</strong></span>: Intentionally visiting a website considered malicious by the security filter could lead to possible infection of the end-user workstation and lead to the compromise of your systems.</p></blockquote>
+				<p>Note that incoming messages may still be blocked by the Proofpoint spam filter. TAP (URL Defense) will only scan and modify links in messages that have not been blocked or quarantined. If you feel that a site has been improperly blocked by TAP (URL Defense) and would like to have it cleared, please <span style="color: #4098cb;"><a style="color: #4098cb;" href="https://www.acs-ilm.com/support-center/">contact support</a></span> with pertinent information.</p>
+				<p>Be sure you are still reviewing any links before clicking on them. Targeted attacks are constantly evolving and may slip through security measures. Use the form below to verify whether a link you received in an email message is valid, or is likely to be a phishing or malware installation attempt. Copy the link from your email message, paste it into the field below and click the Decode button&#8230;</p>
+
+
+				<form action="#" class="form_url_decoder">
+					<p>Use the decoder form to retrieve the original, unaltered link you received in an email message.</p>
+					<input type="URL" name="URL" id="encoded" placeholder="Encoded URL" class="txtbox">
+					<input type="submit" value="Decode" onclick="decode_url(URL); return false;" class="submitbtn">										
+					<div id="decoded_output" class="decoded_output">
+						<a id="decoded" href='#'> </a>
+					</div>
+				</form>
+			</div>	
+	</article>
+</div>
+</html>
+<script>
+function decode_url() {
+		var source = document.getElementById('encoded');
+		var dest = document.getElementById('decoded');
+		
+		if (!source) {
+				alert("Cannot find source textarea with id 'encoded'.");
+				return false;
+		}
+		if (!dest) {
+				alert("Cannot find target <p> with id 'decoded'.");
+				return false;
+		};
+
+		var full_url = encoded.value;
+
+		var find_re = /.+?u=(.+?)(&.*)?$/;
+		var matches = find_re.exec(full_url);
+		if (matches) {
+				var defended = matches[1];
+				var with_slashes = defended.replace(/_/g, '/');  // Regex with g flag to get all
+				var defenseless = de_hex(with_slashes);
+
+				dest.textContent = defenseless;
+				dest.setAttribute('href',defenseless);
+				var element = document.getElementById("decoded_output");
+		  		element.classList.add("success");
+
+		} else {
+				dest.textContent = full_url;
+				dest.setAttribute('href',full_url);
+				var element = document.getElementById("decoded_output");
+		  		element.classList.add("success");
+		}
+
+		return false;
+}
+
+function de_hex(hexed) {
+	var result = hexed;
+	var hex_re = /(.*)(-)([0-9A-F][0-9A-F])(.*)/;
+	var hexmatches = hex_re.exec(hexed);
+
+	while (hexmatches && hexmatches.index !== null) {
+			var character = String.fromCharCode(parseInt(hexmatches[3], 16));
+			result = hexmatches[1] + character + hexmatches[4];
+
+			hexmatches = hex_re.exec(result);
+	}
+	return result;
+}
+</script>
